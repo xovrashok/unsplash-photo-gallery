@@ -5,14 +5,20 @@ type Props = {
 };
 
 const Loader = ({ loading }: Props) => {
+  if (!loading) return null;
+
   return (
-    <ClipLoader
-      loading={loading}
-      className="block my-[90px] mx-auto border-red-50"
-      size={80}
-      aria-label="Loading Spinner"
-      data-testid="loader"
-    />
+    <div className="flex flex-col items-center justify-center py-8 gap-3">
+      <ClipLoader
+        color="#64748b"
+        loading={loading}
+        size={36}
+        speedMultiplier={0.8}
+      />
+      <span className="text-xs font-medium text-slate-400 tracking-wider uppercase">
+        Loading images...
+      </span>
+    </div>
   );
 };
 

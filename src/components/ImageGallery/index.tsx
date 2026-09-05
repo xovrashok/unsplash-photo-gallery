@@ -8,10 +8,10 @@ type Props = {
 
 const ImageGallery = ({ images, openModal }: Props) => {
   return (
-    <>
-      <ul className="grid grid-cols-3 gap-[15px] m-3 pt-20">
+    <main className="max-w-7xl mx-auto px-4 pt-24 pb-12">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {images.map((image) => (
-          <li key={image.id}>
+          <li key={image.id} className="flex justify-center">
             <ImageCard
               src={image.urls.small}
               alt={image.alt_description}
@@ -20,7 +20,7 @@ const ImageGallery = ({ images, openModal }: Props) => {
           </li>
         ))}
       </ul>
-    </>
+    </main>
   );
 };
 
