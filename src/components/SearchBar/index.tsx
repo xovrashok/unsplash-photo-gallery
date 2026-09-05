@@ -1,9 +1,24 @@
 import { CiSearch } from "react-icons/ci";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, FormikHelpers } from "formik";
 import toast from "react-hot-toast";
 
-const SearchBar = ({ initialValues = { searchValue: "" }, onSubmit }) => {
-  const handleSubmit = (values, actions) => {
+interface ValuesType {
+  searchValue: string;
+}
+
+type Props = {
+  initialValues?: ValuesType;
+  onSubmit: (values: ValuesType, actions: FormikHelpers<ValuesType>) => void;
+};
+
+const SearchBar = ({
+  initialValues = { searchValue: "" },
+  onSubmit,
+}: Props) => {
+  const handleSubmit = (
+    values: ValuesType,
+    actions: FormikHelpers<ValuesType>,
+  ) => {
     if (!values.searchValue.trim()) {
       toast.error("Please enter a search term!");
       actions.resetForm();

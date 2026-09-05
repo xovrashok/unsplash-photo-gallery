@@ -2,6 +2,13 @@ import Modal from "react-modal";
 
 Modal.setAppElement("#root");
 
+type Props = {
+  modalIsOpen: boolean;
+  closeModal: () => void;
+  src: string;
+  alt: string;
+};
+
 const customStyles = {
   overlay: {
     backgroundColor: "rgba(0, 0, 0, 0.75)",
@@ -19,7 +26,7 @@ const customStyles = {
   },
 };
 
-const ImageModal = ({ modalIsOpen, closeModal, src, alt }) => {
+const ImageModal = ({ modalIsOpen, closeModal, src, alt }: Props) => {
   return (
     <Modal
       isOpen={modalIsOpen}

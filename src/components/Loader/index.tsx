@@ -1,6 +1,10 @@
 import { ClipLoader } from "react-spinners";
 
-const Loader = ({ loading }) => {
+type Props = {
+  loading: boolean;
+};
+
+const Loader = ({ loading }: Props) => {
   return (
     <ClipLoader
       loading={loading}

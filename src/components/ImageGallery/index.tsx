@@ -1,7 +1,12 @@
+import { ImageType } from "../../api/images-api";
 import ImageCard from "../ImageCard";
-import ImageModal from "../ImageModal";
 
-const ImageGallery = ({ images, openModal, closeModal, selectedImage }) => {
+type Props = {
+  images: ImageType[];
+  openModal: (image: ImageType) => void;
+};
+
+const ImageGallery = ({ images, openModal }: Props) => {
   return (
     <>
       <ul className="grid grid-cols-3 gap-[15px] m-3 pt-20">
@@ -15,12 +20,6 @@ const ImageGallery = ({ images, openModal, closeModal, selectedImage }) => {
           </li>
         ))}
       </ul>
-      <ImageModal
-        modalIsOpen={Boolean(selectedImage)}
-        closeModal={closeModal}
-        src={selectedImage?.urls.regular}
-        alt={selectedImage?.alt_description}
-      />
     </>
   );
 };

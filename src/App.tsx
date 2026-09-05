@@ -1,17 +1,23 @@
 import { useState } from "react";
-import SearchBar from "./components/SerachBar";
+import SearchBar from "./components/SearchBar";
 import LoadMoreBtn from "./components/LoadMoreBtn";
-import { fetchPhotos } from "./api/images-api";
+import { fetchPhotos, ImageType } from "./api/images-api";
 import ImageGallery from "./components/ImageGallery";
 import Loader from "./components/Loader";
 import ErrorMessage from "./components/ErrorMessage";
 import toast, { Toaster } from "react-hot-toast";
+import { FormikHelpers } from "formik";
+import ImageModal from "./components/ImageModal";
+
+interface ValuesType {
+  searchValue: string;
+}
 
 function App() {
-  const [images, setImages] = useState([]);
-  const [error, setError] = useState("");
+  const [images, setImages] = useState<ImageType[]>([]);
+  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<ImageType | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
@@ -20,7 +26,10 @@ function App() {
     searchValue: "",
   };
 
-  const handleSubmit = async (values, actions) => {
+  const handleSubmit = async (
+    values: ValuesType,
+    actions: FormikHelpers<ValuesType>,
+  ) => {
     try {
       setPage(1);
       setSearchQuery(values.searchValue);
@@ -66,7 +75,7 @@ function App() {
     }
   };
 
-  const openModal = (image) => {
+  const openModal = (image: ImageType) => {
     setSelectedImage(image);
   };
 
@@ -78,15 +87,15 @@ function App() {
     <>
       <Toaster position="top-right" />
       <SearchBar initialValues={initialValues} onSubmit={handleSubmit} />
-
       {error && <ErrorMessage />}
-
-      <ImageGallery
-        images={images}
-        openModal={openModal}
+      <ImageGallery images={images} openModal={openModal} />
+      <ImageModal
+        modalIsOpen={Boolean(selectedImage)}
         closeModal={closeModal}
-        selectedImage={selectedImage}
+        src={selectedImage?.urls.regular || ""}
+        alt={selectedImage?.alt_description || ""}
       />
+
       {loading && <Loader loading={loading} />}
       {images.length > 0 && !loading && page < totalPage && (
         <LoadMoreBtn onClick={handleLoadMore} />
